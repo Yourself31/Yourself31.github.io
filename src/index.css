@@ -13,7 +13,7 @@
 }
 
 body {
-  @apply bg-onyx text-silver overflow-hidden;
+  @apply bg-onyx text-silver overflow-x-hidden overflow-y-hidden;
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
