@@ -1,0 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-onyx: #050505;
+  --color-silver: #E5E5E5;
+  --font-syncopate: "Syncopate", sans-serif;
+  --font-mono: "Space Grotesk", monospace;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  @apply bg-onyx text-silver overflow-hidden;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  position: relative;
+  z-index: 10;
+}
+
+* {
+  cursor: none !important;
+}
+
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 0;
+}
