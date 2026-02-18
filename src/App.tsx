@@ -10,6 +10,7 @@ const App: React.FC = () => {
   const [statusIndex, setStatusIndex] = useState(0);
   const [messageIndex, setMessageIndex] = useState(0);
   const [isCopied, setIsCopied] = useState(false);
+  const [showCursor, setShowCursor] = useState(false);
 
   const statuses = [
     'INIT_SEQUENCE_PENDING',
@@ -33,6 +34,15 @@ const App: React.FC = () => {
     'PATCHING_CORE_VULNERABILITIES',
     'EXTRACTING_ENCRYPTED_ASSETS'
   ];
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(pointer: fine)');
+    const updateCursorMode = () => setShowCursor(mediaQuery.matches);
+    updateCursorMode();
+    mediaQuery.addEventListener('change', updateCursorMode);
+
+    return () => mediaQuery.removeEventListener('change', updateCursorMode);
+  }, []);
 
   useEffect(() => {
     const progressInterval = setInterval(() => {
@@ -90,22 +100,22 @@ const App: React.FC = () => {
   const hexString = `0x${hexProgress.toString(16).toUpperCase().padStart(2, '0')}`;
 
   return (
-    <div className="relative min-h-screen bg-onyx text-silver font-mono selection:bg-silver selection:text-onyx flex items-center justify-center p-8">
+    <div className="relative min-h-[100svh] bg-onyx text-silver font-mono selection:bg-silver selection:text-onyx flex items-center justify-center px-4 py-6 sm:p-8">
       <ParticleField />
-      <VaultCursor />
+      {showCursor && <VaultCursor />}
 
       {/* Terminal Status Corners */}
-      <div className="fixed top-8 left-8 text-[10px] tracking-[0.2em] text-silver/40 flex items-center gap-2">
+      <div className="hidden md:flex fixed top-8 left-8 text-[10px] tracking-[0.2em] text-silver/40 items-center gap-2">
         <div className="w-1.5 h-1.5 bg-silver/60 rounded-full animate-pulse" />
         {statuses[statusIndex]}
       </div>
       
-      <div className="fixed top-8 right-8 text-[10px] tracking-[0.2em] text-silver/40 flex flex-col items-end gap-1">
+      <div className="hidden md:flex fixed top-8 right-8 text-[10px] tracking-[0.2em] text-silver/40 flex-col items-end gap-1">
         <span>V_0.1.0_BETA</span>
         <span className="text-silver/20 italic uppercase">PHASE: ALPHA_DEPLOY</span>
       </div>
 
-      <div className="fixed bottom-8 left-8 flex gap-6 text-silver/40">
+      <div className="hidden md:flex fixed bottom-8 left-8 gap-6 text-silver/40">
         <MagneticElement strength={0.2}>
           <a href="https://github.com/Yourself31" target="_blank" rel="noreferrer" className="hover:text-silver transition-colors">
             <Github size={18} />
@@ -128,18 +138,23 @@ const App: React.FC = () => {
         </MagneticElement>
       </div>
 
-      <div className="fixed bottom-8 right-8 text-[10px] tracking-[0.2em] text-silver/40">
+      <div className="hidden md:block fixed bottom-8 right-8 text-[10px] tracking-[0.2em] text-silver/40">
         LATENCY: 14MS // SECTOR: 7G
       </div>
 
-      <main className="relative z-10 flex flex-col items-center text-center max-w-4xl">
-        <header className="mb-12">
+      <main className="relative z-10 flex flex-col items-center text-center max-w-4xl w-full">
+        <div className="md:hidden mb-5 text-[10px] tracking-[0.18em] text-silver/50 flex items-center gap-2">
+          <div className="w-1.5 h-1.5 bg-silver/60 rounded-full animate-pulse" />
+          {statuses[statusIndex]}
+        </div>
+
+        <header className="mb-10 md:mb-12 w-full">
           <GlitchText 
             text="COMING SOON" 
-            className="text-6xl md:text-8xl font-syncopate font-bold tracking-[0.4em] block mb-2"
+            className="text-4xl sm:text-5xl md:text-8xl font-syncopate font-bold tracking-[0.12em] sm:tracking-[0.22em] md:tracking-[0.4em] block mb-2"
           />
           <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-silver/30 to-transparent mb-6" />
-          <div className="text-[10px] md:text-xs tracking-[0.5em] text-silver/60 uppercase min-h-[1.5em]">
+          <div className="text-[9px] sm:text-[10px] md:text-xs tracking-[0.2em] sm:tracking-[0.35em] md:tracking-[0.5em] text-silver/60 uppercase min-h-[1.5em]">
             <GlitchText 
               key={messageIndex}
               text={subMessages[messageIndex]} 
@@ -149,7 +164,7 @@ const App: React.FC = () => {
           </div>
         </header>
 
-        <section className="mb-16 w-full max-w-md">
+        <section className="mb-12 md:mb-16 w-full max-w-md">
           <div className="flex justify-between text-[10px] tracking-[0.2em] text-silver/60 mb-2">
             <span>DECRYPTING ASSETS</span>
             <span>{hexString}</span>
@@ -162,9 +177,9 @@ const App: React.FC = () => {
           </div>
         </section>
 
-        <section className="flex flex-col items-center gap-12">
+        <section className="flex flex-col items-center gap-9 md:gap-12">
           {/* Kinetic Countdown */}
-          <div className="flex gap-4 md:gap-12">
+          <div className="grid grid-cols-2 gap-x-7 gap-y-6 md:flex md:gap-12">
             {[
               { label: 'DAYS', value: timeLeft.days },
               { label: 'HOURS', value: timeLeft.hours },
@@ -172,22 +187,37 @@ const App: React.FC = () => {
               { label: 'SECS', value: timeLeft.seconds },
             ].map((unit) => (
               <div key={unit.label} className="flex flex-col items-center">
-                <span className="text-3xl md:text-5xl font-bold tracking-tighter mb-2">
+                <span className="text-3xl md:text-5xl font-bold tracking-tighter mb-1.5 md:mb-2">
                   {formatNum(unit.value)}
                 </span>
-                <span className="text-[8px] md:text-[10px] tracking-[0.3em] text-silver/30 font-bold uppercase">
+                <span className="text-[8px] md:text-[10px] tracking-[0.22em] md:tracking-[0.3em] text-silver/30 font-bold uppercase">
                   {unit.label}
                 </span>
               </div>
             ))}
           </div>
 
-          <div className="pt-12 border-t border-silver/5 w-full flex flex-col items-center">
-            <span className="text-[10px] tracking-[0.6em] text-silver/20 font-bold uppercase mb-2">OPERATOR</span>
-            <span className="text-xl md:text-2xl font-syncopate font-bold tracking-[0.5em] text-silver/80">
+          <div className="pt-9 md:pt-12 border-t border-silver/5 w-full flex flex-col items-center">
+            <span className="text-[10px] tracking-[0.4em] md:tracking-[0.6em] text-silver/20 font-bold uppercase mb-2">OPERATOR</span>
+            <span className="text-lg sm:text-xl md:text-2xl font-syncopate font-bold tracking-[0.24em] sm:tracking-[0.34em] md:tracking-[0.5em] text-silver/80">
               ISAIAH VELEZ
             </span>
           </div>
+        </section>
+
+        <section className="md:hidden mt-10 flex gap-7 text-silver/45">
+          <a href="https://github.com/Yourself31" target="_blank" rel="noreferrer" className="hover:text-silver transition-colors">
+            <Github size={18} />
+          </a>
+          <a href="https://www.linkedin.com/in/isaiahvelez" target="_blank" rel="noreferrer" className="hover:text-silver transition-colors">
+            <Linkedin size={18} />
+          </a>
+          <a href="https://www.instagram.com/iamisaiahvelez" target="_blank" rel="noreferrer" className="hover:text-silver transition-colors">
+            <Instagram size={18} />
+          </a>
+          <button onClick={handleShare} className="hover:text-silver transition-colors">
+            {isCopied ? <Check size={18} /> : <Share2 size={18} />}
+          </button>
         </section>
       </main>
 
