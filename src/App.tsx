@@ -100,7 +100,7 @@ const App: React.FC = () => {
   const hexString = `0x${hexProgress.toString(16).toUpperCase().padStart(2, '0')}`;
 
   return (
-    <div className="relative h-[100svh] overflow-hidden bg-onyx text-silver font-mono selection:bg-silver selection:text-onyx flex items-center justify-center px-4 py-4 sm:p-8">
+    <div className="fixed inset-0 overflow-hidden bg-onyx text-silver font-mono selection:bg-silver selection:text-onyx flex items-center justify-center px-3 py-3 sm:px-8 sm:py-8">
       <ParticleField />
       {showCursor && <VaultCursor />}
 
@@ -142,19 +142,19 @@ const App: React.FC = () => {
         LATENCY: 14MS // SECTOR: 7G
       </div>
 
-      <main className="relative z-10 flex h-full w-full max-w-4xl flex-col items-center justify-center text-center">
-        <div className="md:hidden mb-3 max-w-[92vw] px-1 text-[9px] tracking-[0.08em] text-silver/50 flex items-center gap-2 truncate">
+      <main className="relative z-10 flex h-full w-full max-w-4xl flex-col items-center justify-center text-center overflow-hidden">
+        <div className="md:hidden mb-2 max-w-[92vw] px-1 text-[9px] tracking-[0.08em] text-silver/50 flex items-center gap-2 truncate">
           <div className="w-1.5 h-1.5 bg-silver/60 rounded-full animate-pulse" />
           {statuses[statusIndex]}
         </div>
 
-        <header className="mb-6 md:mb-12 w-full">
+        <header className="mb-5 md:mb-12 w-full">
           <GlitchText 
             text="COMING SOON" 
-            className="text-4xl sm:text-5xl md:text-8xl font-syncopate font-bold tracking-[0.12em] sm:tracking-[0.22em] md:tracking-[0.4em] block mb-2"
+            className="text-3xl sm:text-5xl md:text-8xl font-syncopate font-bold tracking-[0.1em] sm:tracking-[0.22em] md:tracking-[0.4em] block mb-2"
           />
           <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-silver/30 to-transparent mb-4 md:mb-6" />
-          <div className="px-1 text-[8px] sm:text-[10px] md:text-xs tracking-[0.1em] sm:tracking-[0.35em] md:tracking-[0.5em] text-silver/60 uppercase min-h-[1.5em] break-all">
+          <div className="mx-auto max-w-[92vw] truncate px-1 text-[8px] sm:text-[10px] md:text-xs tracking-[0.1em] sm:tracking-[0.35em] md:tracking-[0.5em] text-silver/60 uppercase min-h-[1.5em]">
             <GlitchText 
               key={messageIndex}
               text={subMessages[messageIndex]} 
@@ -177,9 +177,9 @@ const App: React.FC = () => {
           </div>
         </section>
 
-        <section className="flex flex-col items-center gap-6 md:gap-12">
+        <section className="flex flex-col items-center gap-5 md:gap-12">
           {/* Kinetic Countdown */}
-          <div className="grid grid-cols-2 gap-x-7 gap-y-6 md:flex md:gap-12">
+          <div className="grid grid-cols-2 gap-x-6 gap-y-4 md:flex md:gap-12">
             {[
               { label: 'DAYS', value: timeLeft.days },
               { label: 'HOURS', value: timeLeft.hours },
@@ -187,7 +187,7 @@ const App: React.FC = () => {
               { label: 'SECS', value: timeLeft.seconds },
             ].map((unit) => (
               <div key={unit.label} className="flex flex-col items-center">
-                <span className="text-3xl md:text-5xl font-bold tracking-tighter mb-1.5 md:mb-2">
+                <span className="text-2xl md:text-5xl font-bold tracking-tighter mb-1.5 md:mb-2">
                   {formatNum(unit.value)}
                 </span>
                 <span className="text-[8px] md:text-[10px] tracking-[0.22em] md:tracking-[0.3em] text-silver/30 font-bold uppercase">
@@ -197,15 +197,15 @@ const App: React.FC = () => {
             ))}
           </div>
 
-          <div className="pt-6 md:pt-12 border-t border-silver/5 w-full flex flex-col items-center">
-            <span className="text-[10px] tracking-[0.4em] md:tracking-[0.6em] text-silver/20 font-bold uppercase mb-2">OPERATOR</span>
-            <span className="text-base sm:text-xl md:text-2xl font-syncopate font-bold tracking-[0.14em] sm:tracking-[0.34em] md:tracking-[0.5em] text-silver/80">
+          <div className="pt-5 md:pt-12 border-t border-silver/5 w-full flex flex-col items-center">
+            <span className="text-[10px] tracking-[0.3em] md:tracking-[0.6em] text-silver/20 font-bold uppercase mb-2">OPERATOR</span>
+            <span className="text-sm sm:text-xl md:text-2xl font-syncopate font-bold tracking-[0.1em] sm:tracking-[0.34em] md:tracking-[0.5em] text-silver/80">
               ISAIAH VELEZ
             </span>
           </div>
         </section>
 
-        <section className="md:hidden mt-6 flex gap-7 text-silver/45">
+        <section className="md:hidden mt-4 flex gap-6 text-silver/45">
           <a href="https://github.com/Yourself31" target="_blank" rel="noreferrer" className="hover:text-silver transition-colors">
             <Github size={18} />
           </a>
