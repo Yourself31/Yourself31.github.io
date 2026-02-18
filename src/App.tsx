@@ -117,7 +117,7 @@ const App: React.FC = () => {
 
       <div className="hidden md:flex fixed bottom-8 left-8 gap-6 text-silver/40">
         <MagneticElement strength={0.2}>
-          <a href="https://github.com/Yourself31" target="_blank" rel="noreferrer" className="hover:text-silver transition-colors">
+          <a href="https://github.com/isaiahvelez" target="_blank" rel="noreferrer" className="hover:text-silver transition-colors">
             <Github size={18} />
           </a>
         </MagneticElement>
@@ -206,7 +206,7 @@ const App: React.FC = () => {
         </section>
 
         <section className="md:hidden mt-4 flex gap-6 text-silver/45">
-          <a href="https://github.com/Yourself31" target="_blank" rel="noreferrer" className="hover:text-silver transition-colors">
+          <a href="https://github.com/isaiahvelez" target="_blank" rel="noreferrer" className="hover:text-silver transition-colors">
             <Github size={18} />
           </a>
           <a href="https://www.linkedin.com/in/isaiahvelez" target="_blank" rel="noreferrer" className="hover:text-silver transition-colors">
