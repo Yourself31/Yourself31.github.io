@@ -36,12 +36,24 @@ const App: React.FC = () => {
   ];
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia('(pointer: fine)');
-    const updateCursorMode = () => setShowCursor(mediaQuery.matches);
+    const finePointerQuery = window.matchMedia('(pointer: fine)');
+    const coarsePointerQuery = window.matchMedia('(pointer: coarse)');
+    const updateCursorMode = () => {
+      setShowCursor(
+        finePointerQuery.matches ||
+        coarsePointerQuery.matches ||
+        navigator.maxTouchPoints > 0 ||
+        'ontouchstart' in window
+      );
+    };
     updateCursorMode();
-    mediaQuery.addEventListener('change', updateCursorMode);
+    finePointerQuery.addEventListener('change', updateCursorMode);
+    coarsePointerQuery.addEventListener('change', updateCursorMode);
 
-    return () => mediaQuery.removeEventListener('change', updateCursorMode);
+    return () => {
+      finePointerQuery.removeEventListener('change', updateCursorMode);
+      coarsePointerQuery.removeEventListener('change', updateCursorMode);
+    };
   }, []);
 
   useEffect(() => {
