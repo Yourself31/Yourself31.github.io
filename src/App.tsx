@@ -85,7 +85,7 @@ const App: React.FC = () => {
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
   useEffect(() => {
-    const target = new Date("2026-07-01T00:00:00-05:00");
+    const target = new Date("2026-08-14T00:00:00-05:00");
 
     const timer = setInterval(() => {
       const now = new Date();
